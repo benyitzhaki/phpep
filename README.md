@@ -1,45 +1,22 @@
-##jsep: A Tiny JavaScript Expression Parser
-[jsep](http://jsep.from.so/) is a simple expression parser written in JavaScript. It can parse JavaScript expressions but not operations. The difference between expressions and operations is akin to the difference between a cell in an Excel spreadsheet vs. a proper JavaScript program.
+##phpep: A Tiny PHP Expression Parser - Ported from jsep
+[phpep](http://jsep.from.so/) is a simple expression parser written in PHP, ported from JavaScript. It can parse expressions but not operations. The difference between expressions and operations is akin to the difference between a cell in an Excel spreadsheet vs. a proper JavaScript program.
 
-###Why jsep?
-I wanted a lightweight, tiny parser to be included in one of my other libraries. [esprima](http://esprima.org/) and other parsers are great, but had more power than I need and were *way* too large to be included in a library that I wanted to keep relatively small.
-
-jsep's output is almost identical to [esprima's](http://esprima.org/doc/index.html#ast), which is in turn based on [SpiderMonkey's](https://developer.mozilla.org/en-US/docs/SpiderMonkey/Parser_API).
-
-###Custom Build
-First, install [Grunt](http://gruntjs.com/). While in the jsep project directory, run:
-
-    npm install .
-    grunt
-
-The jsep built files will be in the build/ directory.
+###Why phpep?
+I wanted a lightweight, tiny parser to be included in one of my other libraries. jsep provided this functionality. I also wanted to be able to parse these expressions in my PHP projects, which led me to porting jsep.
 
 ###Usage
-####Client-side
-    <script src="/PATH/TO/jsep.min.js" type="text/javascript"></script>
-    ...
-    var parse_tree = jsep("1 + 1");
-####Node.JS
-First, run `npm install jsep`. Then, in your source file:
-
-    var jsep = require("jsep");
-    var parse_tree = jsep("1 + 1");
+####PHP
+    require('phpep.php');
+    $expr = new PHPEP("'"1 + 1");
+    $stack = $expr->exec();
+    var_dump($stack);
 
 ####Custom Operators
-    // Add a custom ^ binary operator with precedence 10
-    jsep.addBinaryOp("^", 10);
-    
-    // Add a custom @ unary operator with precedence 10
-    jsep.addUnaryOp('@');
-    
-    // Remove a binary operator
-    jsep.removeBinaryOp(">>>");
-    
-    // Remove a unary operator
-    jsep.removeUnaryOp("~");
+    // Not yet implemented.
 
 ###License
-jsep is under the MIT license. See LICENSE file.
+phpep is under the MIT license. See LICENSE file.
 
 ###Thanks
+Thanks to Stephen Oney for the original jsep project
 Some parts of the latest version of jsep were adapted from the esprima parser.
