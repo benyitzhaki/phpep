@@ -7,7 +7,7 @@ I wanted a lightweight, tiny parser to be included in one of my other libraries.
 ###Usage
 ####PHP
     require('phpep.php');
-    $expr = new PHPEP("'"1 + 1");
+    $expr = new PHPEP("1 + 1");
     $stack = $expr->exec();
     var_dump($stack);
 

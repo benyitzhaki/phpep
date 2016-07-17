@@ -67,8 +67,8 @@ class PHPEP
   public function exec()
   {
     $nodes = array();
-    $ch_i;
-    $node;
+    $ch_i = null;
+    $node = null;
       
     while ($this->index < $this->length) {
       $ch_i = $this->exprICode($this->index);
@@ -101,10 +101,10 @@ class PHPEP
   }
 
   private function charAtFunc ($i) {
-    return $this->expr[$i];
+    return (!$this->expr || !isset($this->expr[$i])) ? null : $this->expr[$i];
   }
   private function charCodeAtFunc ($i) {
-    return ord($this->expr[$i]);
+    return (!$this->expr || !isset($this->expr[$i])) ? null : ord($this->expr[$i]);
   }
   private function exprI ($i) {
     return $this->charAtFunc($i);
@@ -124,7 +124,7 @@ class PHPEP
   private function getMaxKeyLen ($obj)
   {
     $max_len = 0;
-    $len;
+    $len = null;
     foreach ($obj as $key => $val) {
       if (($len = strlen($key)) > $max_len && array_key_exists($key, $obj)) {
         $max_len = $len;
@@ -140,7 +140,7 @@ class PHPEP
 
   private function createBinaryExpression ($operator, $left, $right)
   {
-    $type = ($operator === '||' || $operator === '&&') ? LOGICAL_EXP : BINARY_EXP;
+    $type = ($operator === '||' || $operator === '&&') ? self::LOGICAL_EXP : self::BINARY_EXP;
     return array(
       'type' => $type,
       'operator' => $operator,
@@ -179,9 +179,9 @@ class PHPEP
 
   private function gobbleExpression () {
     $test = $this->gobbleBinaryExpression();
-    $consequent;
-    $alternate;
-    
+    $consequent = null;
+    $alternate = null;
+
     $this->gobbleSpaces();
     if($this->exprICode($this->index) === self::QUMARK_CODE) {
       // Ternary expression: test ? consequent : alternate
@@ -214,7 +214,7 @@ class PHPEP
   private function gobbleBinaryOp ()
   {
     $this->gobbleSpaces();
-    $biop;
+    $biop = null;
     $to_check = substr($this->expr, $this->index, $this->max_binop_len);
     $tc_len = strlen($to_check);
     while($tc_len > 0) {
@@ -228,15 +228,15 @@ class PHPEP
   }
 
   private function gobbleBinaryExpression () {
-    $ch_i;
-    $node;
-    $biop;
-    $prec;
-    $stack;
-    $biop_info;
-    $left;
-    $right;
-    $i;
+    $ch_i = null;
+    $node = null;
+    $biop = null;
+    $prec = null;
+    $stack = null;
+    $biop_info = null;
+    $left = null;
+    $right = null;
+    $i = null;
 
     // First, try to get the leftmost thing
     // Then, check to see if there's a binary operator operating on that leftmost thing
@@ -302,9 +302,9 @@ class PHPEP
   // An individual part of a binary expression:
   // e.g. `foo.bar(baz)`, `1`, `"abc"`, `(a % 2)` (because it's in parenthesis)
   private function gobbleToken () {
-    $ch;
-    $to_check;
-    $tc_len;
+    $ch = null;
+    $to_check = null;
+    $tc_len = null;
     
     $this->gobbleSpaces();
     $ch = $this->exprICode($this->index);
@@ -342,8 +342,8 @@ class PHPEP
 
   private function gobbleNumericLiteral () {
     $number = '';
-    $ch;
-    $chCode;
+    $ch = null;
+    $chCode = null;
     while($this->isDecimalDigit($this->exprICode($this->index))) {
       $number .= $this->exprI($this->index++);
     }
@@ -394,7 +394,7 @@ class PHPEP
     $str = '';
     $quote = $this->exprI($this->index++);
     $closed = false;
-    $ch;
+    $ch = null;
 
     while($this->index < $this->length) {
       $ch = $this->exprI($this->index++);
@@ -436,7 +436,7 @@ class PHPEP
   private function gobbleIdentifier () {
     $ch = $this->exprICode($this->index);
     $start = $this->index;
-    $identifier;
+    $identifier = null;
 
     if ($this->isIdentifierStart($ch)) {
       $this->index++;
@@ -445,7 +445,7 @@ class PHPEP
     }
 
     while ($this->index < $this->length) {
-      $ch = exprICode($this->index);
+      $ch = $this->exprICode($this->index);
       if ($this->isIdentifierPart($ch)) {
         $this->index++;
       } else {
@@ -476,12 +476,12 @@ class PHPEP
   // until the terminator character `)` or `]` is encountered.
   // e.g. `foo(bar, baz)`, `my_func()`, or `[bar, baz]`
   private function gobbleArguments ($termination) {
-    $ch_i;
+    $ch_i = null;
     $args = array();
-    $node;
+    $node = null;
     while ($this->index < $this->length) {
       $this->gobbleSpaces();
-      $ch_i = $this->exprICode(index);
+      $ch_i = $this->exprICode($this->index);
       if($ch_i === $termination) { // done parsing
         $this->index++;
         break;
@@ -503,8 +503,8 @@ class PHPEP
   // It also gobbles function calls:
   // e.g. `Math.acos(obj.angle)`
   private function gobbleVariable () {
-    $ch_i;
-    $node;
+    $ch_i = null;
+    $node = null;
     $ch_i = $this->exprICode($this->index);
       
     if($ch_i === self::OPAREN_CODE) {
