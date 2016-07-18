@@ -452,7 +452,7 @@ class PHPEP
         break;
       }
     }
-    $identifier = substr($this->expr, $start, $this->index);
+    $identifier = substr($this->expr, $start, $this->index-$start);
 
     if(array_key_exists($identifier, $this->literals)) {
       return array(
