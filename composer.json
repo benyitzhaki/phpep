@@ -1,8 +1,11 @@
 {
-	"name": "benyitzhaki/phpep",
+	"name": "frenchynz/phpep",
 	"description": "PHP Expression Parser - ported from soney/jsep http://jsep.from.so",
 	"require": {
 		"php": "^5.3.3 || ^7.0"
+	},
+	"require-dev": {
+		"phpunit/phpunit": "5.4.*"
 	},
 	"autoload": {
 		"classmap" : [

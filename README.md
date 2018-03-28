@@ -14,6 +14,14 @@ I wanted a lightweight, tiny parser to be included in one of my other libraries.
 ####Custom Operators
     // Not yet implemented.
 
+###Install dependencies
+Dependencies are managed using composer. To install the dependencies, run the following command:
+`php composer.phar install`
+
+###PHPUnit Tests
+This library is using php unit testing framework. In order to test the library, run the following command:
+`/vendor/bin/phpunit`
+
 ###License
 phpep is under the MIT license. See LICENSE file.
 

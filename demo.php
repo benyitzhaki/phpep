@@ -10,3 +10,9 @@ require('src/phpep.php');
 $expr = new PHPEP("1 + 1");
 $stack = $expr->exec();
 print_r($stack);
+
+echo "<br /><br />";
+
+$expr = new PHPEP("context.TagOccurrences > 555");
+$stack = $expr->exec();
+print_r($stack);
