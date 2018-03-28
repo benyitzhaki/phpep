@@ -1,5 +1,5 @@
 {
-	"name": "phpep",
+	"name": "benyitzhaki/phpep",
 	"description": "PHP Expression Parser - ported from soney/jsep http://jsep.from.so",
 	"require": {
 		"php": "^5.3.3 || ^7.0"
